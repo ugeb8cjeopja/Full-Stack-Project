@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Expense Tracker</title>
+  <link rel="stylesheet" href="track.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <center><h1>💰 Expense Tracker</h1></center>
+    </header>
+
+    <section class="add-expense">
+      <h2>Add New Expense</h2>
+      <form id="expense-form" action="/post" method="POST">
+        <div class="form-group">
+          <label for="amount">Amount ($)</label>
+          <input type="number" id="amount" name="amount" placeholder="e.g., 50.00" required>
+        </div>
+        <div class="form-group">
+          <label for="category">Category</label>
+          <select id="category" name="category" required>
+            <option value="">Select Category</option>
+            <option value="Food">Food</option>
+            <option value="Transport">Transport</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Utilities">Utilities</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input type="text" id="description" name="description" placeholder="e.g., Dinner at restaurant">
+        </div>
+        <div class="form-group">
+          <label for="date">Date</label>
+          <input type="date" id="date" name="date" required>
+        </div>
+        <button type="submit" class="btn">Add Expense</button>
+      </form>
+     <!-- Divider -->
+<hr class="section-divider">
+
+<!-- Monthly Summary Section -->
+<section id="summary" class="monthly-summary-box">
+  <h2>📆 Monthly Expense Overview</h2>
+  <div class="summary-cards">
+    <div class="card">
+      <h3>Total Expenses</h3>
+      <p id="total-expense">Rs.0</p>
+    </div>
+    <div class="card">
+      <h3>Total Transactions</h3>
+      <p id="total-transactions">0</p>
+    </div>
+    <div class="card">
+      <h3>Average Per Day</h3>
+      <p id="avg-daily">Rs.0</p>
+    </div>
+  </div>
+</section>
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    fetch('/summary')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("total-expense").textContent = `₹${data.total}`;
+        document.getElementById("total-transactions").textContent = data.totalTransactions;
+        document.getElementById("avg-daily").textContent = `₹${data.avgPerDay}`;
+      })
+      .catch(err => console.error("❌ Failed to load summary:", err));
+  });
+</script>
+
+
+
+    </section>
+
+
